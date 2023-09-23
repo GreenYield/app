@@ -26,7 +26,6 @@ const Yield = () => {
 
 
 
-
     const amount = 1;
     const refCode = 0;
 
@@ -153,22 +152,6 @@ const Yield = () => {
         }
     };
 
-    function makeYieldOnAAVEv2() {
-        alert('deposit aavev2')
-    }
-
-    function redeemYieldOnAAVEv2() {
-        alert('deposit aavev2')
-    }
-
-    function makeYieldOnAAVEv3() {
-        alert('aavev2')
-    }
-
-    function redeemYieldOnAAVEv3() {
-        alert('aavev2')
-    }
-
     return (
         <div>
             <Head>
@@ -215,9 +198,11 @@ const Yield = () => {
                                 </div>
                                 <div className='flex items-center justify-between pt-4'>
                                     <div className='flex items-center'>
-                                        {/* <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2approveTx); }}>
+                                        <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2approveTx); }}>
                                             APPROVE
-                                        </button> */}
+                                        </button>
+                                    </div>
+                                    <div className='flex items-center'>
                                         <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2depositTx); }}>
                                             DEPOSIT
                                         </button>
@@ -244,9 +229,11 @@ const Yield = () => {
                                 </div>
                                 <div className='flex items-center justify-between pt-4'>
                                     <div className='flex items-center'>
-                                        {/* <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3approveTx); }}>
+                                        <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3approveTx); }}>
                                             APPROVE
-                                        </button> */}
+                                        </button>
+                                    </div>
+                                    <div className='flex items-center'>
                                         <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3depositTx); }}>
                                             DEPOSIT
                                         </button>

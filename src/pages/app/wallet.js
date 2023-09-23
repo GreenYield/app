@@ -13,7 +13,8 @@ const Home = () => {
     const embedInstanceSDK = useRef(null);
     const [isOverlayVisible, setIsOverlayVisible] = useState(false);
     const [usdtBalance, setUsdtBalance] = useState(0);
-    const [amountToSwap, setAmountToSwap] = useState(0)
+    const [amountToSwap, setAmountToSwap] = useState('')
+
 
     useEffect(() => {
         console.log(user.wallet.address);
@@ -26,6 +27,10 @@ const Home = () => {
 
         };
     }, []);
+
+    const handleBuyInputChange = (e) => {
+        setAmountToSwap(e.target.value);
+    }
 
     const fetchUsdtBalance = async (walletAddress) => {
         try {
@@ -79,7 +84,7 @@ const Home = () => {
     };
 
     function withdraw() {
-        alert('will sell crypto w/ unlimit here')
+        alert('Will sell crypto to fiat w/ unlimit here!')
     }
 
     return (
@@ -104,9 +109,35 @@ const Home = () => {
 
             <div className='pt-1 justify-center max-w-xl items-center mx-auto'>
                 <h2 className='font-light text-md justify-start mx-4'>Your Balance:<span className='text-xl text-lime-400 font-bold'> ${usdtBalance}</span></h2>
-                <input placeholder="How much $?" />
-                <h2 className='font-light text-md justify-start mx-8 pt-4'>Deposit:<button onClick={handleOnClick} className='rounded-full bg-lime-400 text-black px-5 py-0.5 mx-4 text-[15px] font-montserrat font-light mb-0.5'>DEPOSIT</button></h2>
-                <h2 className='font-light text-md justify-start mx-8 pt-4'>Withdraw:<button onClick={withdraw} className='rounded-full bg-lime-400 text-black px-5 py-0.5 mx-4 text-[15px] font-montserrat font-light mb-0.5'>WITHDRAW</button></h2>
+                <div className="flex items-center">
+                    <h2 className='font-light text-md justify-start mx-8 pt-4'>Deposit: <input
+                        type="number"
+                        value={amountToSwap}
+                        onChange={handleBuyInputChange}
+                        placeholder="Amount to Deposit"
+                        className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
+                    />
+                        <button
+                            onClick={handleOnClick}
+                            className="rounded-full bg-lime-400 text-black text-xs px-2 py-0.5"
+                        >
+                            DEPOSIT
+                        </button></h2></div>
+                <div className="flex items-center">
+                    <h2 className='font-light text-md justify-start mx-8 pt-4'>Withdraw:<input
+                        type="number"
+                        value={amountToSwap}
+                        onChange={handleBuyInputChange}
+                        placeholder="Amount to Withdraw"
+                        className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
+                    />
+                        <button
+                            onClick={withdraw}
+                            className="rounded-full bg-lime-400 text-black text-xs px-2 py-0.5"
+                        >
+                            WITHDRAW
+                        </button>
+                    </h2></div>
                 <div className="w-2 h-2">
                     <div id="overlay-button"></div>
                 </div>
