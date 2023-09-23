@@ -13,6 +13,7 @@ const Home = () => {
     const embedInstanceSDK = useRef(null);
     const [isOverlayVisible, setIsOverlayVisible] = useState(false);
     const [usdtBalance, setUsdtBalance] = useState(0);
+    const [amountToSwap, setAmountToSwap] = useState(0)
 
     useEffect(() => {
         console.log(user.wallet.address);
@@ -62,15 +63,15 @@ const Home = () => {
                 nodeSelector: "#overlay-button",
                 isSandbox: true,
                 walletAddress: user.wallet.address,
-                email: "testoooor@gmail.com",
                 externalId: randomString,
                 defaultFiat: {
                     currency: "USD",
-                    amount: "500",
+                    amount: amountToSwap,
                 },
                 defaultCrypto: {
                     currency: "USDT-MATIC",
                 },
+                redirectUrl: `http://localhost:3000/app/swap/${amountToSwap}`,
             });
         }
         overlayInstanceSDK.current?.show();
@@ -100,17 +101,19 @@ const Home = () => {
                 <meta property="og:image" content="https://www.greenyield.xyz/og.jpg" />
             </Head>
             <Navbar />
+
             <div className='pt-1 justify-center max-w-xl items-center mx-auto'>
                 <h2 className='font-light text-md justify-start mx-4'>Your Balance:<span className='text-xl text-lime-400 font-bold'> ${usdtBalance}</span></h2>
+                <input placeholder="How much $?" />
                 <h2 className='font-light text-md justify-start mx-8 pt-4'>Deposit:<button onClick={handleOnClick} className='rounded-full bg-lime-400 text-black px-5 py-0.5 mx-4 text-[15px] font-montserrat font-light mb-0.5'>DEPOSIT</button></h2>
                 <h2 className='font-light text-md justify-start mx-8 pt-4'>Withdraw:<button onClick={withdraw} className='rounded-full bg-lime-400 text-black px-5 py-0.5 mx-4 text-[15px] font-montserrat font-light mb-0.5'>WITHDRAW</button></h2>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div className="w-2 h-2">
                     <div id="overlay-button"></div>
                 </div>
             </div>
 
             <BottomBar />
-        </div>
+        </div >
     );
 };
 
