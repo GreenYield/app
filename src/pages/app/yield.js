@@ -4,9 +4,9 @@ import Navbar from '@/components/NavbarApp';
 import BottomBar from '@/components/BottomBar';
 import { usePrivy } from '@privy-io/react-auth';
 import { ethers } from 'ethers';
-import AAVEV2ABI from '../utils/AAVEV2ABI.json'
-import AAVEV3ABI from '../utils/AAVEV3ABI.json'
-import USDTABI from '../utils/usdtABI.json'
+import AAVEV2ABI from '../../utils/AAVEV2ABI.json'
+import AAVEV3ABI from '../../utils/AAVEV3ABI.json'
+import USDTABI from '../../utils/usdtABI.json'
 
 
 const Yield = () => {

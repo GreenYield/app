@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { usePrivy } from '@privy-io/react-auth';
-import Particles from '@/pages/utils/particles';
+import Particles from '../utils/particles';
 
 const Welcome = () => {
     // const [onLoad, setOnLoad] = useState(false)
