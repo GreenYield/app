@@ -144,34 +144,53 @@ const Home = () => {
             <Navbar />
 
             <div className='pt-1 justify-center max-w-xl items-center mx-auto'>
-                <h2 className='font-light text-md justify-start mx-4'>Your Balance:<span className='text-xl text-lime-400 font-bold'> ${usdtBalance}</span></h2>
-                <div className="flex items-center">
-                    <h2 className='font-light text-md justify-start mx-8 pt-4'>Deposit: <input
-                        type="number"
-                        value={amountToSwap}
-                        onChange={handleBuyInputChange}
-                        placeholder="Amount to Deposit"
-                        className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
-                    />
+                <div className='pt-1 mx-4'>
+                    <div className='flex items-center justify-between'>
+                        <div className='flex items-center'>
+                            <h2 className='font-light text-md'>Your Wallet </h2>
+                            <img src='/wallet_black.png' width={26} height={26} className='mr-1 mx-1 mt-0.5' />
+                        </div>
+                        <div className='text-right'>
+                            <h2 className='font-light text-md justify-start mx-4'>Your Balance:<span className='text-lime-400 font-bold px-1'> ${usdtBalance}</span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div className="pt-20"></div>
+                <div className="border border-lime-400 rounded-lg p-4 mx-4">
+                    <h2 className='font-medium text-lg justify-center mx-auto flex'>Deposit $</h2>
+                    <div className="flex items-centerfont-light text-md justify-center mx-auto pt-4">
+                        <input
+                            type="number"
+                            value={amountToSwap}
+                            onChange={handleBuyInputChange}
+                            placeholder="Amount to Deposit"
+                            className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
+                        />
                         <button
                             onClick={handleOnClick}
                             className="rounded-full bg-lime-400 text-black text-xs px-2 py-1"
                         >
                             DEPOSIT
-                        </button></h2></div>
-                <div className="flex items-center">
-                    <h2 className='font-light text-md justify-start mx-8 pt-4'>Withdraw: <input
-                        type="number"
-                        placeholder="Amount to Withdraw"
-                        className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
-                    />
+                        </button>
+                    </div>
+                </div>
+                <div className="pt-12"></div>
+                <div className="border border-lime-400 rounded-lg p-4 mx-4">
+                    <h2 className='font-medium text-lg justify-center mx-auto flex'>Withdraw $</h2>
+                    <div className="flex items-centerfont-light text-md justify-center mx-auto pt-4">
+                        <input
+                            type="number"
+                            placeholder="Amount to Withdraw"
+                            className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
+                        />
                         <button
                             onClick={withdraw}
                             className="rounded-full bg-lime-400 text-black text-xs px-2 py-1"
                         >
                             WITHDRAW
                         </button>
-                    </h2></div>
+                    </div>
+                </div>
                 <div className="w-2 h-2">
                     <div id="overlay-button"></div>
                 </div>

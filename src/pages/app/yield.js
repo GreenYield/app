@@ -89,7 +89,7 @@ const Yield = () => {
                 const allowStringv2 = allowancev2.toString();
                 console.log("allow v2", allowStringv2)
                 console.log("usdtwei", usdtBalanceWei)
-                if (allowStringv2 >= usdtBalanceWei)
+                if (allowStringv2 != 0)
                     setHasApprovedForV2(true);
                 else {
                     setHasApprovedForV2(false);
@@ -103,7 +103,7 @@ const Yield = () => {
                 const allowancev3 = await contractUSDT.allowance(user.wallet.address, aavev3Contract);
                 const allowStringv3 = allowancev3.toString();
                 console.log("allow v3", allowStringv3)
-                if (allowStringv3 >= usdtBalanceWei)
+                if (allowStringv3 != 0)
                     setHasApprovedForV3(true);
                 else {
                     setHasApprovedForV3(false);
@@ -121,7 +121,7 @@ const Yield = () => {
                 setUserWallet(user.wallet.address);
                 checkApprovalStatusForV2();
                 checkApprovalStatusForV3();
-            }, 1000);
+            }, 1500);
         }
     }, []);
 
