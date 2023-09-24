@@ -49,7 +49,7 @@ const Welcome = () => {
             <div className="absolute inset-0 max-w-6xl mx-auto px-4 sm:px-6 top-0 z-0 pointer-events-none">
                 <Particles
                     className="absolute top-40 inset-0 z-0 pointer-events-none"
-                    quantity={20}
+                    quantity={30}
                 />
             </div>
             <div className='pt-40 md:pt-80 font-normal px-5 bg-white z-[100]'>
