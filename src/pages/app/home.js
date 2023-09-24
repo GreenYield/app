@@ -102,16 +102,18 @@ const Home = () => {
             <Navbar />
             <div className="pt-1 justify-center max-w-xl items-center mx-auto">
                 {depositsV2.length === 0 && depositsV3.length === 0 ? (
-                    <div className='mx-5 border border-lime-400 p-2 text-md'>
-                        <h2 className='text-md text-center font-semibold'>Welcome to greenyield.xyz! 🎈</h2>
-                        <h3 className='pt-2 text-sm text-center'>Here is a quick overview on how it works :</h3>
-                        <ul className='text-sm text-center pt-1'>
-                            <li className='text-xs'>1. Fund your account with your debit/credit card.</li>
-                            <li className='text-xs'>2. Choose the yield source that you want.</li>
-                            <li className='text-xs'>3. Approve & Deposit $.</li>
-                            <li className='text-xs'>4. Enjoy the yield!</li>
-                            <li className='text-xs'>5. Withdraw when you want.</li>
-                        </ul>
+                    <div className='pt-60'>
+                        <div className='mx-5 border border-lime-400 rounded-lg p-2 text-md'>
+                            <h2 className='text-md text-center font-semibold'>Welcome to greenyield.xyz! 🎈</h2>
+                            <h3 className='pt-2 text-sm text-center'>Here is a quick overview on how it works :</h3>
+                            <ul className='text-sm text-center pt-1'>
+                                <li className='text-xs'>1. Fund your account with your debit/credit card.</li>
+                                <li className='text-xs'>2. Choose the yield source that you want.</li>
+                                <li className='text-xs'>3. Approve & Deposit $.</li>
+                                <li className='text-xs'>4. Enjoy the yield!</li>
+                                <li className='text-xs'>5. Withdraw when you want.</li>
+                            </ul>
+                        </div>
                     </div>
                 ) : (
                     <>

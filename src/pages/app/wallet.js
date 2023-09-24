@@ -155,16 +155,16 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="pt-20"></div>
-                <div className="border border-lime-400 rounded-lg p-4 mx-4">
-                    <h2 className='font-medium text-lg justify-center mx-auto flex'>Deposit $</h2>
+                <div className="pt-40"></div>
+                <div className="border border-black rounded-lg p-4 mx-4">
+                    <h3 className='text-lime-400 font-semibold pt-2 text-center text-2xl'>Deposit</h3>
                     <div className="flex items-centerfont-light text-md justify-center mx-auto pt-4">
                         <input
                             type="number"
                             value={amountToSwap}
                             onChange={handleBuyInputChange}
                             placeholder="Amount to Deposit"
-                            className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
+                            className="bg-black text-white text-xs rounded-xl border border-lime-400 mr-2 px-2 py-1"
                         />
                         <button
                             onClick={handleOnClick}
@@ -174,14 +174,14 @@ const Home = () => {
                         </button>
                     </div>
                 </div>
-                <div className="pt-12"></div>
-                <div className="border border-lime-400 rounded-lg p-4 mx-4">
-                    <h2 className='font-medium text-lg justify-center mx-auto flex'>Withdraw $</h2>
+                <div className="pt-4"></div>
+                <div className="border border-black rounded-lg p-4 mx-4">
+                    <h3 className='text-lime-400 font-semibold pt-2 text-center text-2xl'>Withdraw</h3>
                     <div className="flex items-centerfont-light text-md justify-center mx-auto pt-4">
                         <input
                             type="number"
                             placeholder="Amount to Withdraw"
-                            className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
+                            className="bg-black text-white text-xs rounded-xl border border-lime-400 mr-2 px-2 py-1"
                         />
                         <button
                             onClick={withdraw}
