@@ -15,7 +15,6 @@ const Home = () => {
     const [usdtBalance, setUsdtBalance] = useState(0);
     const [amountToSwap, setAmountToSwap] = useState('')
 
-
     useEffect(() => {
         console.log(user.wallet.address);
         fetchUsdtBalance(user.wallet.address);
@@ -46,7 +45,6 @@ const Home = () => {
                 }
             }
         };
-
         const waitForSDKRender = () => {
             const sdkRenderInterval = setInterval(() => {
                 if (document.querySelector('iframe[src="https://onramp-sandbox.gatefi.com/"]')) {

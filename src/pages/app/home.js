@@ -1,11 +1,74 @@
-import React, { useEffect } from 'react';
+
+
+
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/NavbarApp';
 import BottomBar from '@/components/BottomBar';
 
-
-
 const Home = () => {
+    const [depositsV2, setDepositsV2] = useState([]);
+    const [depositsV3, setDepositsV3] = useState([]);
+
+    useEffect(() => {
+        const query = `
+    {
+      account(id: "0x1143Fd58A4E777B8AA71805Ea9B683FBb945265f")
+      {
+        deposits(orderBy: timestamp)
+        {
+          amountUSD
+          timestamp
+        }
+      }
+    }
+    `;
+        fetch('https://api.thegraph.com/subgraphs/name/messari/aave-v2-polygon', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.dir(data, { depth: null });
+                setDepositsV2(data.data.account.deposits);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    useEffect(() => {
+        const query = `
+    {
+      account(id: "0x1143Fd58A4E777B8AA71805Ea9B683FBb945265f")
+      {
+        deposits(orderBy: timestamp)
+        {
+          amountUSD
+          timestamp
+        }
+      }
+    }
+    `;
+        fetch('https://api.thegraph.com/subgraphs/name/messari/aave-v3-polygon', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.dir(data, { depth: null });
+                setDepositsV3(data.data.account.deposits);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
 
     return (
         <div>
@@ -26,14 +89,31 @@ const Home = () => {
                 <meta property="og:image" content="https://www.greenyield.xyz/og.jpg" />
             </Head>
             <Navbar />
-            <div className='pt-1 justify-center max-w-xl items-center mx-auto'>
-                <div className='pt-1 mx-4'>
-                    <h2 className='font-light text-md justify-start'>Home</h2>
+            <div className="pt-1 justify-center max-w-xl items-center mx-auto">
+                <div className="pt-1 mx-4">
+                    <h2 className="font-light text-md justify-start">Home</h2>
                 </div>
+                {/* Display deposits */}
+                <ul>
+                    {depositsV2.map((deposit, index) => (
+                        <li key={index}>
+                            Amount: {deposit.amountUSD}, Timestamp: {deposit.timestamp}
+                        </li>
+                    ))}
+                </ul>
+                <ul>
+                    {depositsV3.map((deposit, index) => (
+                        <li key={index}>
+                            Amount: {deposit.amountUSD}, Timestamp: {deposit.timestamp}
+                        </li>
+                    ))}
+                </ul>
+
             </div>
             <BottomBar />
-        </div >
+        </div>
     );
 };
 
 export default Home;
+

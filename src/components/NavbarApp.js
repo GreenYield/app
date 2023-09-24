@@ -37,7 +37,7 @@ const Navbar = () => {
     console.log(user)
 
     return (
-        <div className="py-2">
+        <div className="py-2 z-50 bg-white">
             <nav className="mx-auto flex max-w-7xl items-center justify-between px-3 pt-1 sm:px-0">
                 <div className="w-64">
                     <Link href="/">

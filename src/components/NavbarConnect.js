@@ -20,19 +20,19 @@ const Navbar = () => {
     }, [ready, authenticated, router]);
 
     return (
-        <div className="py-2">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between px-3 pt-1 sm:px-0">
+        <nav className="py-2 z-50">
+            <div className="mx-auto flex max-w-7xl items-center justify-between pt-1 px-3">
                 <div className="w-64">
                     <Link href="/">
                         <Image src="/logo.png" alt='greeyield.xyz' width={220} height={220} />
                     </Link>
                 </div>
-                <button onClick={login} className='rounded-full bg-lime-400 text-black px-3 py-0.5 font-montserrat font-light text-sm sm:text-lg -mb-0.5'>Join Now</button>
-            </nav>
+                <button onClick={login} className='rounded-full bg-lime-400 text-black px-3 py-0.5 text-sm sm:text-lg -mb-0.5'>Join Now</button>
+            </div>
             <div className='py-1' >
                 <hr className='text-lime-400' />
             </div>
-        </div>
+        </nav>
     )
 }
 
