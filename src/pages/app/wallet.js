@@ -28,6 +28,38 @@ const Home = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const applyCustomUnlimit = () => {
+            var iframe = document.querySelector('iframe[src="https://onramp-sandbox.gatefi.com/"]');
+            if (iframe) {
+                var div = iframe.parentElement;
+                if (div.getAttribute('style')) {
+                    div.setAttribute('style', div.getAttribute('style') + 'display: block !important;');
+                } else {
+                    div.setAttribute('style', 'display: block !important;');
+                }
+
+                if (iframe.getAttribute('style')) {
+                    iframe.setAttribute('style', iframe.getAttribute('style') + 'width: 100% !important; height: 100% !important; border: none !important; border-radius: 0px !important; box-shadow: none !important; position: absolute !important;');
+                } else {
+                    iframe.setAttribute('style', 'width: 100% !important; height: 100% !important; border: none !important; border-radius: 0px !important; box-shadow: none !important; position: absolute !important;');
+                }
+            }
+        };
+
+        const waitForSDKRender = () => {
+            const sdkRenderInterval = setInterval(() => {
+                if (document.querySelector('iframe[src="https://onramp-sandbox.gatefi.com/"]')) {
+                    applyCustomUnlimit();
+                    clearInterval(sdkRenderInterval);
+                }
+            }, 1000);
+        };
+
+        waitForSDKRender();
+    }, []);
+
+
     const handleBuyInputChange = (e) => {
         setAmountToSwap(e.target.value);
     }

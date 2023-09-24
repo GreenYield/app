@@ -85,11 +85,11 @@ const Yield = () => {
     useEffect(() => {
         const checkApprovalStatusForV2 = async () => {
             try {
-                const allowance = await contractUSDT.allowance(user.wallet.address, aavev2Contract);
-                const allowString = allowance.toString();
-                console.log("allow", allowString)
+                const allowancev2 = await contractUSDT.allowance(user.wallet.address, aavev2Contract);
+                const allowStringv2 = allowancev2.toString();
+                console.log("allow v2", allowStringv2)
                 console.log("usdtwei", usdtBalanceWei)
-                if (allowString >= usdtBalanceWei)
+                if (allowStringv2 >= usdtBalanceWei)
                     setHasApprovedForV2(true);
                 else {
                     setHasApprovedForV2(false);
@@ -100,10 +100,10 @@ const Yield = () => {
         };
         const checkApprovalStatusForV3 = async () => {
             try {
-                const allowance = await contractUSDT.allowance(user.wallet.address, aavev3Contract);
-                const allowString = allowance.toString();
-                console.log("allow", allowString)
-                if (allowString >= usdtBalanceWei)
+                const allowancev3 = await contractUSDT.allowance(user.wallet.address, aavev3Contract);
+                const allowStringv3 = allowancev3.toString();
+                console.log("allow v3", allowStringv3)
+                if (allowStringv3 >= usdtBalanceWei)
                     setHasApprovedForV3(true);
                 else {
                     setHasApprovedForV3(false);
@@ -114,14 +114,14 @@ const Yield = () => {
         };
         if (ready) {
             console.log(user.wallet.address);
-            fetchUSDTBalance(user.wallet.address);
-            fetchAAVEV2Balance(user.wallet.address);
-            fetchAAVEV3Balance(user.wallet.address);
-            setUserWallet(user.wallet.address);
             setTimeout(() => {
+                fetchUSDTBalance(user.wallet.address);
+                fetchAAVEV2Balance(user.wallet.address);
+                fetchAAVEV3Balance(user.wallet.address);
+                setUserWallet(user.wallet.address);
                 checkApprovalStatusForV2();
                 checkApprovalStatusForV3();
-            }, 2000);
+            }, 1000);
         }
     }, []);
 
