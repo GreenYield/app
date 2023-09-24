@@ -59,6 +59,11 @@ const Home = () => {
             } else {
                 overlayInstanceSDK.current.show();
                 setIsOverlayVisible(true);
+                //TEST
+                const customStylesheet = document.createElement('link');
+                customStylesheet.rel = 'stylesheet';
+                customStylesheet.href = '/widget-custom.css';
+                document.head.appendChild(customStylesheet);
             }
         } else {
             const randomString = crypto.randomBytes(32).toString("hex");
@@ -80,6 +85,7 @@ const Home = () => {
             });
         }
         overlayInstanceSDK.current?.show();
+
         setIsOverlayVisible(true);
     };
 
@@ -119,21 +125,19 @@ const Home = () => {
                     />
                         <button
                             onClick={handleOnClick}
-                            className="rounded-full bg-lime-400 text-black text-xs px-2 py-0.5"
+                            className="rounded-full bg-lime-400 text-black text-xs px-2 py-1"
                         >
                             DEPOSIT
                         </button></h2></div>
                 <div className="flex items-center">
-                    <h2 className='font-light text-md justify-start mx-8 pt-4'>Withdraw:<input
+                    <h2 className='font-light text-md justify-start mx-8 pt-4'>Withdraw: <input
                         type="number"
-                        value={amountToSwap}
-                        onChange={handleBuyInputChange}
                         placeholder="Amount to Withdraw"
                         className="bg-black text-white text-xs rounded-lg border border-white mr-2 px-2 py-1"
                     />
                         <button
                             onClick={withdraw}
-                            className="rounded-full bg-lime-400 text-black text-xs px-2 py-0.5"
+                            className="rounded-full bg-lime-400 text-black text-xs px-2 py-1"
                         >
                             WITHDRAW
                         </button>

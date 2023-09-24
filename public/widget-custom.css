@@ -1,0 +1,13 @@
+/* Override styles for the widget */
+div[style*='display: flex;'] {
+    display: block !important;
+}
+
+iframe[src='https://onramp-sandbox.gatefi.com/'] {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    position: absolute !important;
+}

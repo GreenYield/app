@@ -12,9 +12,14 @@ import USDTABI from '../utils/usdtABI.json'
 const Yield = () => {
     const { user, sendTransaction, ready } = usePrivy();
     const [usdtBalance, setUsdtBalance] = useState(0);
+    const [usdtBalanceWei, setUsdtBalanceWei] = useState(0);
     const [aaveV2Balance, setAAVEV2Balance] = useState(0);
+    const [aaveV2BalanceWei, setAAVEV2BalanceWei] = useState(0);
     const [aaveV3Balance, setAAVEV3Balance] = useState(0);
-    const [userWallet, setUserWallet] = useState('0x9b4FF9682287Ac2207f3981c02922C0a3E1F515D');
+    const [aaveV3BalanceWei, setAAVEV3BalanceWei] = useState(0);
+    const [userWallet, setUserWallet] = useState('0x9b4ff9682287ac2207f3981c02922c0a3e1f515d');
+    const [hasApprovedForV2, setHasApprovedForV2] = useState(false);
+    const [hasApprovedForV3, setHasApprovedForV3] = useState(false);
 
     const usdtContractAddress = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
     const aavev2Contract = '0x8dFf5E27EA6b7AC08EbFdf9eB090F32ee9a30fcf';
@@ -24,25 +29,21 @@ const Yield = () => {
     const contractv2 = new ethers.Contract(aavev2Contract, AAVEV2ABI, provider);
     const contractv3 = new ethers.Contract(aavev3Contract, AAVEV3ABI, provider);
 
-
-
-    const amount = 1;
     const refCode = 0;
 
-    const dataApproveV2 = contractUSDT.interface.encodeFunctionData('approve', [aavev2Contract, amount])
-    const dataDepositV2 = contractv2.interface.encodeFunctionData('deposit', [usdtContractAddress, amount, userWallet, refCode]);
-    const dataWithdrawV2 = contractv2.interface.encodeFunctionData('withdraw', [usdtContractAddress, amount, userWallet]);
+    const dataApproveV2 = contractUSDT.interface.encodeFunctionData('approve', [aavev2Contract, usdtBalanceWei])
+    const dataDepositV2 = contractv2.interface.encodeFunctionData('deposit', [usdtContractAddress, usdtBalanceWei, userWallet, refCode]);
+    const dataWithdrawV2 = contractv2.interface.encodeFunctionData('withdraw', [usdtContractAddress, aaveV2BalanceWei, userWallet]);
 
-    const dataApproveV3 = contractUSDT.interface.encodeFunctionData('approve', [aavev3Contract, amount])
-    const dataDepositV3 = contractv3.interface.encodeFunctionData('deposit', [usdtContractAddress, amount, userWallet, refCode]);
-    const dataWithdrawV3 = contractv3.interface.encodeFunctionData('withdraw', [usdtContractAddress, amount, userWallet]);
+    const dataApproveV3 = contractUSDT.interface.encodeFunctionData('approve', [aavev3Contract, usdtBalanceWei])
+    const dataDepositV3 = contractv3.interface.encodeFunctionData('deposit', [usdtContractAddress, usdtBalanceWei, userWallet, refCode]);
+    const dataWithdrawV3 = contractv3.interface.encodeFunctionData('withdraw', [usdtContractAddress, aaveV3BalanceWei, userWallet]);
 
 
     const aavev2approveTx = {
         to: usdtContractAddress,
         chainId: 137,
         data: dataApproveV2,
-        // value: '0x3B9ACA00',
         gasLimit: '0x00200B20',
     }
 
@@ -50,7 +51,6 @@ const Yield = () => {
         to: aavev2Contract,
         chainId: 137,
         data: dataDepositV2,
-        // value: '0x3B9ACA00',
         gasLimit: '0x00200B20',
     };
 
@@ -58,7 +58,6 @@ const Yield = () => {
         to: aavev2Contract,
         chainId: 137,
         data: dataWithdrawV2,
-        // value: '0x3B9ACA00',
         gasLimit: '0x00200B20',
     };
 
@@ -66,7 +65,6 @@ const Yield = () => {
         to: usdtContractAddress,
         chainId: 137,
         data: dataApproveV3,
-        // value: '0x3B9ACA00',
         gasLimit: '0x00200B20',
     }
 
@@ -74,7 +72,6 @@ const Yield = () => {
         to: aavev3Contract,
         chainId: 137,
         data: dataDepositV3,
-        // value: '0x3B9ACA00',
         gasLimit: '0x00200B20',
     };
 
@@ -82,17 +79,49 @@ const Yield = () => {
         to: aavev3Contract,
         chainId: 137,
         data: dataWithdrawV3,
-        // value: '0x3B9ACA00',
         gasLimit: '0x00200B20',
     };
 
     useEffect(() => {
-        console.log(user.wallet.address);
-        fetchUSDTBalance(user.wallet.address);
-        fetchAAVEV2Balance(user.wallet.address);
-        fetchAAVEV3Balance(user.wallet.address);
+        const checkApprovalStatusForV2 = async () => {
+            try {
+                const allowance = await contractUSDT.allowance(user.wallet.address, aavev2Contract);
+                const allowString = allowance.toString();
+                console.log("allow", allowString)
+                console.log("usdtwei", usdtBalanceWei)
+                if (allowString >= usdtBalanceWei)
+                    setHasApprovedForV2(true);
+                else {
+                    setHasApprovedForV2(false);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        const checkApprovalStatusForV3 = async () => {
+            try {
+                const allowance = await contractUSDT.allowance(user.wallet.address, aavev3Contract);
+                const allowString = allowance.toString();
+                console.log("allow", allowString)
+                if (allowString >= usdtBalanceWei)
+                    setHasApprovedForV3(true);
+                else {
+                    setHasApprovedForV3(false);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        };
         if (ready) {
+            console.log(user.wallet.address);
+            fetchUSDTBalance(user.wallet.address);
+            fetchAAVEV2Balance(user.wallet.address);
+            fetchAAVEV3Balance(user.wallet.address);
             setUserWallet(user.wallet.address);
+            setTimeout(() => {
+                checkApprovalStatusForV2();
+                checkApprovalStatusForV3();
+            }, 2000);
         }
     }, []);
 
@@ -110,6 +139,7 @@ const Yield = () => {
             const balanceStringEth = parseFloat(balanceString) / 1e6;
             const balanceOK = balanceStringEth.toFixed(2)
             setUsdtBalance(balanceOK);
+            setUsdtBalanceWei(balanceString)
         } catch (error) {
             console.error("Error fetching USDT balance:", error);
         }
@@ -129,6 +159,7 @@ const Yield = () => {
             const balanceStringEth = parseFloat(balanceString) / 1e6;
             const balanceOK = balanceStringEth.toFixed(2)
             setAAVEV2Balance(balanceOK);
+            setAAVEV2BalanceWei(balanceString);
         } catch (error) {
             console.error("Error fetching USDT balance:", error);
         }
@@ -147,6 +178,7 @@ const Yield = () => {
             const balanceStringEth = parseFloat(balanceString) / 1e6;
             const balanceOK = balanceStringEth.toFixed(2)
             setAAVEV3Balance(balanceOK);
+            setAAVEV3BalanceWei(balanceString);
         } catch (error) {
             console.error("Error fetching USDT balance:", error);
         }
@@ -190,29 +222,32 @@ const Yield = () => {
                                     <div className='flex items-center'>
                                         <h2 className='font-light text-md'>AAVEv2</h2>
                                         <span className='rounded-full bg-lime-400 text-slate-600 px-2 py-0.5 mx-2 font-montserrat font-semibold text-[12px]'>1.33% APY</span>
+                                        {/* <span className='text-black font-light text-xs'>(USDT)</span> */}
                                     </div>
                                     <div className='flex items-center'>
                                         <span className='mx-1 font-light'>In Yield:</span>
                                         <span className='text-lime-400 font-bold px-1'>${aaveV2Balance}</span>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between pt-4'>
+                                <div className='flex items-center justify-center pt-4'>
                                     <div className='flex items-center'>
-                                        <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2approveTx); }}>
-                                            APPROVE
-                                        </button>
+                                        {hasApprovedForV2 ? (
+                                            <button className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2depositTx); }}>
+                                                DEPOSIT
+                                            </button>
+                                        ) : (
+                                            <button className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2approveTx); }}>
+                                                APPROVE
+                                            </button>
+                                        )}
                                     </div>
                                     <div className='flex items-center'>
-                                        <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2depositTx); }}>
-                                            DEPOSIT
-                                        </button>
-                                    </div>
-                                    <div className='flex items-center'>
-                                        <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2withdrawTx); }}>
+                                        <button className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev2withdrawTx); }}>
                                             WITHDRAW
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div className=' mx-4 pt-4'>
@@ -221,29 +256,32 @@ const Yield = () => {
                                     <div className='flex items-center'>
                                         <h2 className='font-light text-md'>AAVEv3</h2>
                                         <span className='rounded-full bg-lime-400 text-slate-600 px-2 py-0.5 mx-2 font-montserrat font-semibold text-[12px]'>2.78% APY</span>
+                                        {/* <span className='text-black font-light text-xs'>(USDT)</span> */}
                                     </div>
                                     <div className='flex items-center'>
                                         <span className='mx-1 font-light'>In Yield:</span>
                                         <span className='text-lime-400 font-bold px-1'>${aaveV3Balance}</span>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-between pt-4'>
+                                <div className='flex items-center justify-center pt-4'>
                                     <div className='flex items-center'>
-                                        <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3approveTx); }}>
-                                            APPROVE
-                                        </button>
+                                        {hasApprovedForV3 ? (
+                                            <button className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3depositTx); }}>
+                                                DEPOSIT
+                                            </button>
+                                        ) : (
+                                            <button className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3approveTx); }}>
+                                                APPROVE
+                                            </button>
+                                        )}
                                     </div>
                                     <div className='flex items-center'>
-                                        <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3depositTx); }}>
-                                            DEPOSIT
-                                        </button>
-                                    </div>
-                                    <div className='flex items-center'>
-                                        <button disabled={!user.wallet} className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3withdrawTx); }}>
+                                        <button className='rounded-full text-[15px] bg-lime-400 text-black px-7 py-0.5 mx-4 font-montserrat font-light mb-0.5' onClick={async () => { const txReceipt = await sendTransaction(aavev3withdrawTx); }}>
                                             WITHDRAW
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
